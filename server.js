@@ -1,5 +1,20 @@
 const express = require('express'); // var expresse prend expresse pour le http
 const app = express(); // instasie expresse
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+    host:'172.29.18.130',//localhost si votre node est sur la même VM que votre Bdd
+    user:'',//non utilisateur
+    password:'',//son mode de passe
+    database:'Teste'//table viser
+});
+connection.connect((err) => {
+  if (err) {
+    console.error('Erreur de connexion à la base de données :', err);
+    return;
+  }
+  console.log('Connecté à la base de données MySQL.');  
+});
 
 app.use(express.static('public'));
 app.use(express.json());
