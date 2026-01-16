@@ -1,4 +1,4 @@
-
+var i = 1;
 //recuper élement du DOM
 const monInput = document.getElementById('monInput');
 const monButon = document.getElementById('button');
@@ -16,14 +16,28 @@ monButon.addEventListener('click', () => {
         .then(data => {
             alert(data);
         });
+    i++;
 });
 
 monButon2.addEventListener('click', () => {
-    fetch('/info')
-        .then(responsebrute => responsebrute.json()) //Recupération de la réponse réseau et transformation en json
-        .then(
-            responsejson => {
-                document.getElementById('reponse').innerHTML = responsejson.cle1; //récupération de la réponse trensformer en json et utilisation (récupération de cle1)
-            });
+    if (i == 1) {
+
+
+        fetch('/info')
+            .then(responsebrute => responsebrute.json()) //Recupération de la réponse réseau et transformation en json
+            .then(
+                responsejson => {
+                    document.getElementById('reponse').innerHTML = responsejson.cle1; //récupération de la réponse trensformer en json et utilisation (récupération de cle1)
+                });
+
+    }
+    else {
+        fetch('/info')
+            .then(responsebrute => responsebrute.json()) //Recupération de la réponse réseau et transformation en json
+            .then(
+                responsejson => {
+                    document.getElementById('reponse').innerHTML = responsejson.cle2; //récupération de la réponse trensformer en json et utilisation (récupération de cle1)
+                });
+    }
 });
 

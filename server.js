@@ -9,7 +9,7 @@ app.get('/login', (req, res) => { // C'est une route type get donc par navigateu
 });
 
 app.get('/info', (req, res) => { // C'est une route mais type "get" donc que par formulaire
-    res.json({ cle1: 'crée compte', cle2: '' }); // Requet json mieux compri par navigateur
+    res.json({ cle1: 'crée compte', cle2: 'no' }); // Requet json mieux compri par navigateur
 });
 
 app.post('/register', (req, res) => { // C'est une route mais type "post" donc que par formulaire

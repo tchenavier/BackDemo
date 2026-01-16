@@ -1,0 +1,10 @@
+div.containt
+{
+    align-items: center; /* Centre verticalement */
+    text-align: center;
+}
+input.bouton
+{
+    width: 5%;
+    height: 5%
+}
