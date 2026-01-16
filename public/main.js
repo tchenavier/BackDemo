@@ -1,6 +1,7 @@
 var i = 1;
 //recuper élement du DOM
-const monInput = document.getElementById('monInput');
+const login = document.getElementById('login');
+const Password = document.getElementById('Password');
 const monButon = document.getElementById('button');
 const monButon2 = document.getElementById('button2');
 
@@ -11,7 +12,7 @@ monButon.addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ inputValue: monInput.value })
+        body: JSON.stringify({ loginValue: login.value ,passwordValue: Password.value})
     }).then(response => response.text())
         .then(data => {
             alert(data);
@@ -21,7 +22,6 @@ monButon.addEventListener('click', () => {
 
 monButon2.addEventListener('click', () => {
     if (i == 1) {
-
 
         fetch('/info')
             .then(responsebrute => responsebrute.json()) //Recupération de la réponse réseau et transformation en json
