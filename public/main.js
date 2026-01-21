@@ -4,6 +4,8 @@ const login = document.getElementById('login');
 const Password = document.getElementById('Password');
 const monButon = document.getElementById('button');
 const monButon2 = document.getElementById('button2');
+const BoutonVote = document.getElementById('ButonVote');
+const afficheVote = document.getElementById('afficheVote');
 
 // Ajout d'un écouteur d'événement sur le bouton
 monButon.addEventListener('click', () => {
@@ -12,7 +14,7 @@ monButon.addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ loginValue: login.value ,passwordValue: Password.value})
+        body: JSON.stringify({ loginValue: login.value, passwordValue: Password.value })
     }).then(response => response.text())
         .then(data => {
             alert(data);
@@ -41,3 +43,46 @@ monButon2.addEventListener('click', () => {
     }
 });
 
+window.onload = () => { // Une fois que la page est charger
+    fetch('/users')
+        .then(response => response.json())
+        .then(users => {
+            const usersList = document.getElementById('usersList');
+            users.forEach(user => { // users l'ensemble des user; user qu'un élément de users
+                //création d'un input select option avec id en value et login en texte  
+                const option = document.createElement('option');// crée un objet HTML
+                option.value = user.id;
+                option.text = user.login;
+                usersList.appendChild(option);  //mette les option en enfant de la liste
+
+            });
+        });
+    fetch('/resultaVote')
+        .then(response => response.json())
+        .then(vote => {
+            const voteList = document.getElementById('voteList');
+            vote.forEach(user => { // users l'ensemble des user; user qu'un élément de users
+                //création d'un input select option avec id en value et login en texte  
+                const option = document.createElement('option');// crée un objet HTML
+                option.value = vote.id;
+                option.text = vote.idUser;
+                voteList.appendChild(option); //mette les option en enfant de la liste
+
+            });
+        });
+}
+
+BoutonVote.addEventListener('click', () => {
+    const usersList = document.getElementById('usersList');
+    const selectedUserId = usersList.value;
+    fetch('/Vote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usersList: selectedUserId })
+    }).then(response => response.text())
+        .then(data => {
+            alert(data);
+        });
+});
