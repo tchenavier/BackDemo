@@ -1,7 +1,7 @@
 const express = require('express'); // var expresse prend expresse pour le http
 const app = express(); // instasie expresse
 const mysql = require('mysql2');
-
+require('dotenv').config();
 /*const Utilisateur = process.acce.env.Utilisateur;
 const Mot_Passe = process.acce.env.Mot_Passe;
 const Table = process.acce.env.Table;
@@ -73,7 +73,7 @@ app.post('/Vote', (req, res) => { // C'est une route mais type "post" donc que p
     console.log('Données reçues pour l\'vote');
     console.log(req.body);
     connection.query( //sert a envoyer les donner au serveur
-        'INSERT INTO user (`idUser`) VALUES (?)',
+        'INSERT INTO vote (`idUser`) VALUES (?)',
         [req.body.usersList],
         (err, results) => {
             if (err) {
@@ -90,7 +90,7 @@ app.post('/Vote', (req, res) => { // C'est une route mais type "post" donc que p
     );
 });
 app.get('/resultaVote', (req, res) => {
-  connection.query('SELECT * FROM vote and *user', (err, results) => {// * pour tout selectionner
+  connection.query('SELECT * FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser`', (err, results) => {// * pour tout selectionner
     if (err) {//si erreur
       console.error('Erreur lors de la récupération des utilisateurs :', err);
       res.status(500).json({ message: 'Erreur serveur' });
