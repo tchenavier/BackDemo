@@ -1,8 +1,8 @@
 const express = require('express'); // var expresse prend expresse pour le http
 const app = express(); // instasie expresse
 const mysql = require('mysql2');
-require('dotenv').config();
-/*const Utilisateur = process.acce.env.Utilisateur;
+/*require('dotenv').config();
+const Utilisateur = process.acce.env.Utilisateur;
 const Mot_Passe = process.acce.env.Mot_Passe;
 const Table = process.acce.env.Table;
 const Adresse = process.acce.env.Adresse;*/
@@ -90,7 +90,9 @@ app.post('/Vote', (req, res) => { // C'est une route mais type "post" donc que p
     );
 });
 app.get('/resultaVote', (req, res) => {
-  connection.query('SELECT * FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser`', (err, results) => {// * pour tout selectionner
+//connection.query('SELECT COUNT(user.login) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login`', (err, results) => {// login pour ne selectionner que les pseudo (évite de révéler trop d'information)
+//connection.query('SELECT  COUNT(login) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login`', (err, results) => {// login pour ne selectionner que les pseudo (évite de révéler trop d'information)
+connection.query('SELECT * FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {  
     if (err) {//si erreur
       console.error('Erreur lors de la récupération des utilisateurs :', err);
       res.status(500).json({ message: 'Erreur serveur' });

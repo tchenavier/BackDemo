@@ -4,7 +4,7 @@ const login = document.getElementById('login');
 const Password = document.getElementById('Password');
 const monButon = document.getElementById('button');
 const monButon2 = document.getElementById('button2');
-const BoutonVote = document.getElementById('ButonVote');
+const BoutonVote = document.getElementById('BoutonVote');
 const afficheVote = document.getElementById('afficheVote');
 
 // Ajout d'un écouteur d'événement sur le bouton
@@ -31,7 +31,6 @@ monButon2.addEventListener('click', () => {
                 responsejson => {
                     document.getElementById('reponse').innerHTML = responsejson.cle1; //récupération de la réponse trensformer en json et utilisation (récupération de cle1)
                 });
-
     }
     else {
         fetch('/info')
@@ -44,6 +43,7 @@ monButon2.addEventListener('click', () => {
 });
 
 window.onload = () => { // Une fois que la page est charger
+
     fetch('/users')
         .then(response => response.json())
         .then(users => {
@@ -57,19 +57,21 @@ window.onload = () => { // Une fois que la page est charger
 
             });
         });
+
     fetch('/resultaVote')
         .then(response => response.json())
         .then(vote => {
-            const voteList = document.getElementById('voteList');
-            vote.forEach(user => { // users l'ensemble des user; user qu'un élément de users
+            const afficheVote = document.getElementById('afficheVote');
+            vote.forEach(vote => { // users l'ensemble des user; user qu'un élément de users
                 //création d'un input select option avec id en value et login en texte  
-                const option = document.createElement('option');// crée un objet HTML
-                option.value = vote.id;
-                option.text = vote.idUser;
-                voteList.appendChild(option); //mette les option en enfant de la liste
+                const li = document.createElement('li');// crée un objet HTML
+                li.value = vote.id;
+                li.textContent = user.login;
+                afficheVote.appendChild(li); //mette les option en enfant de la liste
 
             });
         });
+    //afficheVote.AfficheVoteFonction(vote);
 }
 
 BoutonVote.addEventListener('click', () => {
@@ -86,3 +88,7 @@ BoutonVote.addEventListener('click', () => {
             alert(data);
         });
 });
+
+/*function AfficheVoteFonction(vote) {
+    evenement.target.innerHTML = vote;
+}*/
