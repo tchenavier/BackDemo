@@ -60,15 +60,14 @@ window.onload = () => { // Une fois que la page est charger
 
     fetch('/resultaVote')
         .then(response => response.json())
-        .then(vote => {
+        .then( logins=> {//l'ensemble
             const afficheVote = document.getElementById('afficheVote');
-            vote.forEach(vote => { // users l'ensemble des user; user qu'un élément de users
+            logins.forEach( login => { // users l'ensemble des user; user qu'un élément de users
                 //création d'un input select option avec id en value et login en texte  
                 const li = document.createElement('li');// crée un objet HTML
-                li.value = vote.id;
-                li.textContent = user.login;
+                // li.value = vote.id;
+                li.innerHTML = login.login +" "+ login.toto;
                 afficheVote.appendChild(li); //mette les option en enfant de la liste
-
             });
         });
     //afficheVote.AfficheVoteFonction(vote);

@@ -92,7 +92,9 @@ app.post('/Vote', (req, res) => { // C'est une route mais type "post" donc que p
 app.get('/resultaVote', (req, res) => {
 //connection.query('SELECT COUNT(user.login) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login`', (err, results) => {// login pour ne selectionner que les pseudo (évite de révéler trop d'information)
 //connection.query('SELECT  COUNT(login) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login`', (err, results) => {// login pour ne selectionner que les pseudo (évite de révéler trop d'information)
-connection.query('SELECT * FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {  
+//SELECT * , COUNT(`idUser`) AS vote_count FROM user JOIN vote ON user.id = vote.idUser GROUP BY `login` ORDER BY `vote_count` //code aide Thomas
+//connection.query('SELECT * , COUNT(`idUser`) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {
+connection.query('SELECT user.id, user.login, vote.idUser , COUNT(`idUser`) as toto FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {      
     if (err) {//si erreur
       console.error('Erreur lors de la récupération des utilisateurs :', err);
       res.status(500).json({ message: 'Erreur serveur' });
@@ -101,6 +103,7 @@ connection.query('SELECT * FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUse
     res.json(results);//pas erreur
   });
 });
+
 
 app.listen(3000, () => { //express écoute sur le port 3000 et affiche un message dans le console
     console.log('server runing')
