@@ -33,8 +33,8 @@ app.get('/login', (req, res) => { // C'est une route type get donc par navigateu
     res.send('page login');
 });
 
-app.get('/info', (req, res) => { // C'est une route mais type "get" donc que par formulaire
-    res.json({ cle1: 'crée compte', cle2: 'no' }); // Requet json mieux compri par navigateur
+app.get('/info', (req, res) => { // C'est une route mais type "get" donc que pour récupérer des information
+    res.json({ cle1: 'crée compte', cle2: 'no' }); // Requet json mieux compri par le navigateur
 });
 // Partie d'ajoue et de lecture 
 app.post('/register', (req, res) => { // C'est une route mais type "post" donc que par formulaire
