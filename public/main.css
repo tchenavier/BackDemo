@@ -3,6 +3,11 @@ div.containt
     align-items: center; /* Centre verticalement */
     text-align: center;
 }
+div.conexion
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 input.bouton
 {
     width: 5%;

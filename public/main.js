@@ -76,12 +76,14 @@ window.onload = () => { // Une fois que la page est charger
 BoutonVote.addEventListener('click', () => {
     const usersList = document.getElementById('usersList');
     const selectedUserId = usersList.value;
+    let electeur;
+   electeur = localStorage.getItem('userId');//récuperation de l'id en localStorage
     fetch('/Vote', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ usersList: selectedUserId })
+        body: JSON.stringify({ usersList: selectedUserId, idElecteur :electeur })
     }).then(response => response.text())
         .then(data => {
             alert(data);
@@ -103,7 +105,7 @@ loginButton.addEventListener('click', () => {
         .then(data => {
             alert(data.message);
             alert('ID utilisateur : ' + data.user.id);
-            localStorage.setItem('userId', data.user.id);
+            localStorage.setItem('userId', data.user.id);//depose de l'id en localStorage
         });
 });
 

@@ -93,8 +93,8 @@ app.post('/Vote', (req, res) => { // C'est une route mais type "post" donc que p
     console.log('Données reçues pour l\'vote');
     console.log(req.body);
     connection.query( //sert a envoyer les donner au serveur
-        'INSERT INTO vote (`idUser`) VALUES (?)',
-        [req.body.usersList],
+        'INSERT INTO vote (`idUser`,`electeur`) VALUES (?,?)',
+        [req.body.usersList,req.body.idElecteur],
         (err, results) => {
             if (err) {
                 console.error('Erreur lors de l\'insertion dans la base de données :', err);
@@ -115,7 +115,7 @@ app.get('/resultaVote', (req, res) => {
 //connection.query('SELECT  COUNT(login) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login`', (err, results) => {// login pour ne selectionner que les pseudo (évite de révéler trop d'information)
 //SELECT * , COUNT(`idUser`) AS vote_count FROM user JOIN vote ON user.id = vote.idUser GROUP BY `login` ORDER BY `vote_count` //code aide Thomas
 //connection.query('SELECT * , COUNT(`idUser`) FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {
-connection.query('SELECT user.id, user.login, vote.idUser , COUNT(`idUser`) as toto FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`', (err, results) => {      
+connection.query('SELECT user.id, user.login, vote.idUser , COUNT(`idUser`) as toto FROM `vote`, `user` WHERE `user`.`id` = `vote`.`idUser` GROUP BY `login` , `idUser`,`electeur`', (err, results) => {      
     if (err) {//si erreur
       console.error('Erreur lors de la récupération des utilisateurs :', err);
       res.status(500).json({ message: 'Erreur serveur' });
