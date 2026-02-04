@@ -6,6 +6,8 @@ const monButon = document.getElementById('button');
 const monButon2 = document.getElementById('button2');
 const BoutonVote = document.getElementById('BoutonVote');
 const afficheVote = document.getElementById('afficheVote');
+const loginButton = document.getElementById('loginButton');
+const ExiteButton = document.getElementById('ExitButton');
 
 // Ajout d'un écouteur d'événement sur le bouton
 monButon.addEventListener('click', () => {
@@ -60,13 +62,13 @@ window.onload = () => { // Une fois que la page est charger
 
     fetch('/resultaVote')
         .then(response => response.json())
-        .then( logins=> {//l'ensemble
+        .then(logins => {//l'ensemble
             const afficheVote = document.getElementById('afficheVote');
-            logins.forEach( login => { // users l'ensemble des user; user qu'un élément de users
+            logins.forEach(login => { // users l'ensemble des user; user qu'un élément de users
                 //création d'un input select option avec id en value et login en texte  
                 const li = document.createElement('li');// crée un objet HTML
                 // li.value = vote.id;
-                li.innerHTML = login.login +" "+ login.toto;
+                li.innerHTML = login.login + " " + login.groupement;
                 afficheVote.appendChild(li); //mette les option en enfant de la liste
             });
         });
@@ -77,20 +79,26 @@ BoutonVote.addEventListener('click', () => {
     const usersList = document.getElementById('usersList');
     const selectedUserId = usersList.value;
     let electeur;
-   electeur = localStorage.getItem('userId');//récuperation de l'id en localStorage
-    fetch('/Vote', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ usersList: selectedUserId, idElecteur :electeur })
-    }).then(response => response.text())
-        .then(data => {
-            alert(data);
-        });
+    electeur = localStorage.getItem('userId');//récuperation de l'id en localStorage
+    if (electeur != null) {
+        fetch('/Vote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ usersList: selectedUserId, idElecteur: electeur })
+        }).then(response => response.text())
+            .then(data => {
+                alert(data);
+            });
+    }
+    {
+        console.log("Id non défini");
+    }
+
 });
 
-const loginButton = document.getElementById('loginButton');
+
 loginButton.addEventListener('click', () => {
     const loginInput = document.getElementById('loginInput').value;
     const passwordInput = document.getElementById('passwordInput').value;
@@ -109,6 +117,6 @@ loginButton.addEventListener('click', () => {
         });
 });
 
-/*function AfficheVoteFonction(vote) {
-    evenement.target.innerHTML = vote;
-}*/
+ExiteButton.addEventListener('click', () => {
+localStorage.removeItem('userId');
+});
