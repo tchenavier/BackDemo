@@ -98,7 +98,6 @@ BoutonVote.addEventListener('click', () => {
 
 });
 
-
 loginButton.addEventListener('click', () => {
     const loginInput = document.getElementById('loginInput').value;
     const passwordInput = document.getElementById('passwordInput').value;
